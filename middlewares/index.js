@@ -6,6 +6,7 @@ export const requireSignin = expressJwt({
   algorithms: ['HS256'],
 });
 
+// this is to check if the login user can actually edit/delete the post. Not all login users can
 export const canEditDeletePost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params._id);
