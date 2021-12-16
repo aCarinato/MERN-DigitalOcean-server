@@ -23,6 +23,12 @@ const userSchema = new Schema(
     secret: {
       type: String,
       required: true,
+      lowercase: true,
+    },
+    username: {
+      type: String,
+      unique: true,
+      required: true,
     },
     about: {},
     photo: String,
