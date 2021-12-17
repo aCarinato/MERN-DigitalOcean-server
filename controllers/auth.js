@@ -184,6 +184,7 @@ export const findPeople = async (req, res) => {
     const user = await User.findById(req.user._id);
     // user.following
     let following = user.following;
+    // add the user himself in the list of people to not display
     following.push(user._id);
     const people = await User.find({ _id: { $nin: following } })
       .select('-password -secret')
