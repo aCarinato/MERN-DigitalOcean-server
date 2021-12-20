@@ -46,8 +46,8 @@ export const postsByUser = async (req, res) => {
       .populate('postedBy', '_id name image')
       .sort({ createdAt: -1 })
       .limit(10);
-    // console.log('posts',posts)
     res.json(posts);
+    // console.log(`From the callback 'postsByUser': ${posts}`);
   } catch (err) {
     console.log(err);
   }

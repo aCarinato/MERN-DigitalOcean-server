@@ -94,6 +94,7 @@ export const currentUser = async (req, res) => {
     // res.json(user);
     res.json({ ok: true }); // this is a switch to protect the page in the front end
   } catch (err) {
+    console.log('From currentUser callback');
     console.log(err);
     res.sendStatus(400);
   }
@@ -195,7 +196,7 @@ export const findPeople = async (req, res) => {
   }
 };
 
-// middleware
+// middleware. You can recognise that because it has the next() directive
 export const addFollower = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(req.body._id, {
@@ -210,7 +211,7 @@ export const addFollower = async (req, res, next) => {
 export const userFollow = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user._id, // the logged in user
       {
         $addToSet: { following: req.body._id },
       },
