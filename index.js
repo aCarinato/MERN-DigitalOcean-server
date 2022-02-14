@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
+// import cors from 'cors';
 import { readdirSync } from 'fs';
 
 const morgan = require('morgan');
@@ -22,11 +22,21 @@ mongoose
 // middlewares
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: ['http://localhost:3000'],
-  })
-);
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
+  next();
+});
+// app.use(
+//   cors({
+//     origin: ['http://localhost:3000'],
+//   })
+// );
 
 // the following is done to use the endpoints defined in routes folder
 readdirSync('./routes').map((r) => app.use('/api', require(`./routes/${r}`)));
